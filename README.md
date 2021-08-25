@@ -18,7 +18,7 @@ Clone the repository from github
 git clone https://github.com/esalli/3DNucleiSegmenter
 ```
 
-##Acquire datasets
+## Acquire datasets
 
 Download the data of 12 spheroids from https://figshare.com/s/8cd49182fcac2f37b6bc
 
