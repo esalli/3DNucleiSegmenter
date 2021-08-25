@@ -11,23 +11,55 @@ Create an environment and install packages
 ```
 conda create -n 3DNS python=3.8
 conda activate 3DNS
-coda install git unzip
+conda install git unzip numpy
+conda install -c simpleitk simpleitk
+python -m pip install --upgrade pip
+python -m pip install itk-morphologicalcontourinterpolation
 ```
 Clone the repository from github
 ```
 git clone https://github.com/esalli/3DNucleiSegmenter
 ```
-Download the data of 12 spheroids from https://figshare.com/s/8a7604b77f4d41e9267c
-Extract thr spheroids.zip into data/preprocessedData: unzip spheroids.zip
 
-Download the Independet datasets:
-1 Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
-Extarct the LiverSpheroid.zip  into data/independentData: unzip LiverSpheroid.zip
+## Acquire datasets
+
+### Download the data of 12 spheroids
+
+The data are availabe from https://figshare.com/s/8cd49182fcac2f37b6bc
+
+Extract the spheroids.zip into data/preprocessedData: 
+```
+3DNucleiSegmenter/data/preprocessedData$ unzip spheroids.zip
+```
+### Download the Independet datasets (optional):
+
+Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
+
+Extarct the LiverSpheroid.zip  into data/independentData: 
+```
+3DNucleiSegmenter/data/independentData$ unzip LiverSpheroid.zip
+```
+Neurosphere ( Neurosphere_Dataset.zip) from https://sourceforge.net/projects/opensegspim/files/Sample%20Data/Neurosphere_Dataset.zip/download
+
+
+Manual segmentations of other software from review_binary3dmasks.zip from  http://www.3d-cell-annotator.org/uploads/3/4/9/3/34939463/review_binary3dmasks.zip
+
+Extract the zip files into data/independentData/3DCellAnnotator
+```
+3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip Neurosphere_Dataset.zip 
+3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip review_binary3dmasks.zip 
+```
+Download Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078 into directory data/independentData/3DCellAnnotator
+
+## Preprocess datasets
+
+
+
 
 
 ## Replication of the results of the system configurations
 
-1. Acquire data. Export corresponding .nrrd files to data/preprocessedData/seeds, data/preprocessedData/spheroids, data/sourceData/GT, data/independentData/datasets and data/3rdPartyData/GT. Here, 3rdPartyData refers to the independent datasets.
+1. Acquire data. Export corresponding .nrrd files to data/preprocessedData/seeds, data/preprocessedData/spheroids, data/sourceData/GT, data/independentData/datasets and data/independentData/GT
 2. Acquire prebuilt models. Export corresponding .h5 files to prebuiltModels/U_M2DE, prebuiltModels/U_M3DE, prebuiltModels/U_M3D and prebuiltModels/S.
 3. Perform masking. Navigate to the root and run:
 ```
