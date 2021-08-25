@@ -1,5 +1,6 @@
-# Preprocess independent datasets
-# E Salli et al 2021
+####################################
+# Preprocess independent datasets  #
+####################################
 
 
 import numpy as np
@@ -12,7 +13,6 @@ import configSegmenter as c
 
 from scipy.ndimage import gaussian_filter
 
-from itkwidgets import view
 import tifffile
 
 
@@ -48,7 +48,7 @@ independentinfo.append(independent)
 
 
 independent={
-  "independentFilename": "BroadInstitute/AICS_12_134_C2.tif",
+  "independentFilename": "BroadInstitute/AICS_12_134_C=2.tif",
   "GTFilename": "BroadInstitute/ground_truth_segmented.tif",  
   "expandFactor": 1,
   "spacing": (0.65,0.65,2.9),
@@ -157,7 +157,6 @@ for sph in range(0,4):
 
             slic = X_norm[:, :, k]
             slic = gaussian_filter(slic, sigma = 3)
-            print(np.max(slic))
             if np.max(slic) < 0.1:
                 print("setting slice zero")
                 print(np.max(slic))
@@ -171,7 +170,6 @@ for sph in range(0,4):
             slic = X_norm[:, :, k]
             slic = gaussian_filter(slic, sigma = 3)
 
-            print(np.max(slic))
             if np.max(slic) < 0.1:
                 print("setting slice zero")
                 print(np.max(slic))
