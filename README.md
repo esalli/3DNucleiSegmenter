@@ -20,13 +20,13 @@ git clone https://github.com/esalli/3DNucleiSegmenter
 
 ## Acquire datasets
 
-Download the data of 12 spheroids from https://figshare.com/s/8cd49182fcac2f37b6bc
+### Download the data of 12 spheroids from https://figshare.com/s/8cd49182fcac2f37b6bc
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
 3DNucleiSegmenter/data/preprocessedData$ unzip spheroids.zip
 ```
-Download the Independet datasets:
+### Download the Independet datasets (optional):
 
 Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
 
