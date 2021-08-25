@@ -5,7 +5,7 @@
 import os
 import numpy as np
 import sys
-import nibabel as nib
+# import nibabel as nib
 import glob
 from joblib import Parallel, delayed
 from skimage.measure import label
