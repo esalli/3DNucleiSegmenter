@@ -37,7 +37,7 @@ def general_watershed(mask_img, seeds_img = 0, thold = 0.5, ws_level = 1, prepro
     thold = Threshold for mask binarization.
     ws_level = h-value used in the morphological watershed.
     preproc_seeds = Whether to label seeds with connected components filter.
-    remove_small = Whether to remove segmented objects with less than 5% volume size of the average segmentation.
+    remove_small = Whether to remove segmented objects with less than 5% volume of the average segmentation.
 
     OUTPUTS: 
     segm_img = Segmented nuclei in SITK format.
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     root = os.getcwd()
     mask_dire = os.path.join(root, "data/maskedData", "U_" + args.mask_type)
     seeds_dire = os.path.join(root, "data/maskedData", "U_S")
-    GT_dires = [os.path.join(root, "data/sourceData/GT"), os.path.join(root, "data/independentData/GT")]
+    GT_dires = [os.path.join(root, "data/preprocessedData/GT"), os.path.join(root, "data/independentData/GT")]
     GT_dire = GT_dires[args.dataset]
     dest_dire = os.path.join(root, "data/evaluationScores")
     segm_dires = [os.path.join(root, "data/segmentedData/spheroids"),os.path.join(root, "data/segmentedData/datasets")]
@@ -402,7 +402,7 @@ if __name__ == '__main__':
         model_idx = header_cont[1]
 
         # Specify files
-        GT_kw = "_".join([data_idx, "GT"])
+        GT_kw = "_".join([data_idx, "GT."])
         seeds_kw = "_".join([data_idx,model_idx,keyword])
         GT_file = glob.glob(GT_dire + "/" + GT_kw + "*")[0]
         seeds_file = glob.glob(seeds_dire + "/" + seeds_kw + "*")[0]
