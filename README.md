@@ -13,6 +13,7 @@ conda create -n 3DNS python=3.8
 conda activate 3DNS
 conda install git unzip numpy
 conda install -c simpleitk simpleitk
+conda install -c conda-forge pynrrd
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
