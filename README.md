@@ -68,6 +68,9 @@ Extract the zip files into data/independentData/3DCellAnnotator
 ```
 Download Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078 into directory data/independentData/3DCellAnnotator
 
+Download https://data.broadinstitute.org/bbbc/BBBC034/BBBC034_v1_dataset.zip and extract it into directory data/independentData/BroadInstitute
+Download https://data.broadinstitute.org/bbbc/BBBC034/BBBC034_v1_DatasetGroundTruth.zip and extract it into directory data/independentData/BroadInstitute
+
 ## Preprocess datasets (optional)
 
 Recreate the expanded datasets (optional as they are already included in the 12spheroids.zip)
