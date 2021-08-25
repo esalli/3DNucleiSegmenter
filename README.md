@@ -21,6 +21,15 @@ Clone the repository from github
 git clone https://github.com/esalli/3DNucleiSegmenter
 ```
 
+## Acquire models
+Download the prebuilt deep learning models from https://figshare.com/s/20531ed8e35c9a9b3add
+
+Extract the zip into the root of 3DNucleiSegmenter
+```
+3DNucleiSegmenter$ unzip prebuiltModels.zip
+```
+
+
 ## Acquire datasets
 
 ### Download the data of 12 spheroids
