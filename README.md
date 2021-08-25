@@ -110,7 +110,7 @@ The output should be the following:
 
 ## Training of U-Nets from scratch
 
-1. Acquire data. Do the same steps as when replicating the experiments but also export corresponding .nrrd files to data/preprocessedData/GT. The datasets in 3rdPartyData are not used in training.
+1. Acquire data. Do the same steps as when replicating the experiments but also export corresponding .nrrd files to data/preprocessedData/GT. The datasets in independentData are not used in training.
 2. Create training data via the ground truth masks. Run:
 
 ```
