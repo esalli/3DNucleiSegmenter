@@ -29,7 +29,7 @@ The data are availabe from https://figshare.com/s/8cd49182fcac2f37b6bc
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
-3DNucleiSegmenter/data/preprocessedData$ unzip spheroids.zip
+3DNucleiSegmenter/data/preprocessedData$ unzip 12spheroids.zip
 ```
 ### Download the Independet datasets (optional):
 
@@ -51,10 +51,25 @@ Extract the zip files into data/independentData/3DCellAnnotator
 ```
 Download Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078 into directory data/independentData/3DCellAnnotator
 
-## Preprocess datasets
+## Preprocess datasets (optional)
+
+Recreate the expanded datasets (optional as they are already included in the 12spheroids.zip)
+```
+3DNucleiSegmenter/preprocessCode$ python expandImages.py
+```
+Recreate the seeds (optional as they are already included in the 12spheroids.zip)
+```
+3DNucleiSegmenter/preprocessCode$ python nucleiMarkersIso.py
+```
+Preprocess the independent datasets (optional; required only to evaluate the independent datasets, not needed in training)
 
 
-
+Create filtered images (optional; required only for the evaluation of the conventional watershed based baseline methods) 
+```
+3DNucleiSegmenter/preprocessCode$ python  bilateralFiltering.py
+3DNucleiSegmenter/preprocessCode$ python gradientAnisotropicDiffusionFiltering.py
+3DNucleiSegmenter/preprocessCode$ python nonlocalmeansFiltering.py
+```
 
 
 ## Replication of the results of the system configurations
@@ -77,7 +92,7 @@ Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use
 
 ```
 import numpy as np
-m = np.load("/data/evaluationScores/B|M3DE|0|0.npy", allow_pickle = True).item()
+m = np.load("/data/evaluationScores/A|M3DE|0|0.npy", allow_pickle = True).item()
 scores = []
 for key in m.keys():
     score = m[key][key]
