@@ -77,7 +77,7 @@ Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use
 
 ```
 import numpy as np
-m = np.load("/data/evaluationScores/A|M3DE|0|0.npy", allow_pickle = True).item()
+m = np.load("/data/evaluationScores/B|M3DE|0|0.npy", allow_pickle = True).item()
 scores = []
 for key in m.keys():
     score = m[key][key]
