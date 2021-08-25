@@ -11,7 +11,10 @@ Create an environment and install packages
 ```
 conda create -n 3DNS python=3.8
 conda activate 3DNS
-coda install git unzip
+conda install git unzip numpy
+conda install -c simpleitk simpleitk
+python -m pip install --upgrade pip
+python -m pip install itk-morphologicalcontourinterpolation
 ```
 Clone the repository from github
 ```
@@ -20,7 +23,9 @@ git clone https://github.com/esalli/3DNucleiSegmenter
 
 ## Acquire datasets
 
-### Download the data of 12 spheroids from https://figshare.com/s/8cd49182fcac2f37b6bc
+### Download the data of 12 spheroids
+
+The data are availabe from https://figshare.com/s/8cd49182fcac2f37b6bc
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
@@ -36,14 +41,20 @@ Extarct the LiverSpheroid.zip  into data/independentData:
 ```
 Neurosphere ( Neurosphere_Dataset.zip) from https://sourceforge.net/projects/opensegspim/files/Sample%20Data/Neurosphere_Dataset.zip/download
 
-Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078
 
 Manual segmentations of other software from review_binary3dmasks.zip from  http://www.3d-cell-annotator.org/uploads/3/4/9/3/34939463/review_binary3dmasks.zip
 
 Extract the zip files into data/independentData/3DCellAnnotator
 ```
-3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip Neurosphere_Dataset.zip review_binary3dmasks.zip 
+3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip Neurosphere_Dataset.zip 
+3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip review_binary3dmasks.zip 
 ```
+Download Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078 into directory data/independentData/3DCellAnnotator
+
+## Preprocess datasets
+
+
+
 
 
 ## Replication of the results of the system configurations
