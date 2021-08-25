@@ -4,10 +4,7 @@ import numpy as np
 SPHEROIDS=["1","2","3","4","5","6","7","8","9","10","11","12"]
 SPACINGSXY=np.array([0.088,0.132,0.086,0.085,0.078,0.101,0.093,0.073,0.069,0.078,0.069,0.100])*4 #xy spacings of spheroids
 SPACINGSZ=np.array([ 1.007,1.007,1.007,1.007,1.007,1.007,1.007,1.007,1.007,1.007,1.007,1.007 ])
-
-#Directories for unprocessed data files and downsampled data files
-SOURCE_SPHEROIDS_DATADIR="../data/sourceData/spheroids/" #original spheroids  
-SOURCE_GT_DATADIR="../data/sourceData/GT/" # original ground truth files 
+ 
 
 #Source directory for the additional evaluation datasets (so called independent data)
 SOURCE_ADD_EVAL_DATADIR="../data/independentData/"
@@ -17,8 +14,7 @@ SOURCE_ADD_EVAL_DATADIR="../data/independentData/"
 PREPROCESSED_GT_DATADIR="../data/preprocessedData/GT/"
 PREPROCESSED_SPHEROIDS_DATADIR="../data/preprocessedData/spheroids/"
 PREPROCESSED_SPHEROIDS_EXPANDED_DATADIR="../data/preprocessedData/spheroids/"
-MARKERS_DATADIR="../data/preprocessedData/markers/"
-EDGEIMAGES_DATADIR="../data/preprocessedData/edgeimages/"
+MARKERS_DATADIR="../data/preprocessedData/seeds/"
 PREPROCESSED_SPHEROIDS_FILTERED_DATADIR="../data/preprocessedData/spheroids/filtered/"
 
 #Directory for the preprocessed additional evaluation datasets (so called independent data)
@@ -30,5 +26,4 @@ TEMP_DATADIR="../data/temp/"
 
 #Directory for evaluation scores
 EVALUATION_SCORES_DATADIR="../data/evaluationScores/"
-
-DS_FACTOR=4 #  Down-scaling factor (x and y axis) for the 12 spheroids. As 1024x1024 image are downsampled to 256x256 we set DS_FACTOR=4 
+ 
