@@ -5,7 +5,7 @@ Segmentation of 3D Nuclei
 ## Prerequisities
 
 A python environment with several python packages is required to run 3DNucleiSegmenter.
-A one to setup the python environment is to install Anaconda  (www.anaconda.com), activate it and create an enviroment (called here 3DNS)
+One way to setup the python environment is to install Anaconda  (www.anaconda.com), activate it and create an enviroment (called here 3DNS)
 
 Create an environment and install packages
 ```
