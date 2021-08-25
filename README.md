@@ -1,0 +1,59 @@
+# 3DNucleiSegmenter
+
+Segmentation of 3D Nuclei
+
+## Replication of the results of the system configurations
+
+1. Acquire data. Export corresponding .nrrd files to data/preprocessedData/seeds, data/preprocessedData/spheroids, data/sourceData/GT, data/independentData/datasets and data/3rdPartyData/GT. Here, 3rdPartyData refers to the independent datasets.
+2. Acquire prebuilt models. Export corresponding .h5 files to prebuiltModels/U_M2DE, prebuiltModels/U_M3DE, prebuiltModels/U_M3D and prebuiltModels/S.
+3. Perform masking. Navigate to the root and run:
+```
+python SegmenterCode/mask_nuclei.py --dataset 0 --model_type 2
+```
+Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks, 2D edge masks or seeds, respectively. Dataset can be 0 or 1 with 0 corresponding to the 12 spheroids and 1 to the independent datasets. Masks are generated to data/maskedData folder. 
+
+4. Perform segmentation. Run:
+
+```
+python SegmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
+```
+
+Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use of either A (0), B (1) or C (2) watershed method, mask_type can be either M3D, M3DE, M2DE or S, opt_mode as 0 refers to the use of roundness score and as 1 to the use of optimal score and save_segms specifies whether the segmentation outputs are saved to data/segmentedData. The script simultaneously runs evaluation and the evaluation scores are written to a numpy file which is located in data/evaluationScores. With the arguments specified above, the file would be named as B|M3DE|0|0.npy. To print out the scores, one can run:
+
+```
+import numpy as np
+m = np.load("/data/evaluationScores/A|M3DE|0|0.npy", allow_pickle = True).item()
+scores = []
+for key in m.keys():
+    score = m[key][key]
+    print(key, score)
+```
+
+The output should be the following:
+
+```
+1 (0.8257529521029587, 0.8214707346717058, 0.8247556355877674, 0.02666666666666667, 1.5)
+5 (0.7443302871450623, 0.7524267015261906, 0.7583981167793887, 0.02877697841726619, 1.5)
+6 (0.6719596901113202, 0.6559609405354259, 0.7096854189379703, 0.017937219730941704, 1)
+...
+```
+
+## Training of U-Nets from scratch
+
+1. Acquire data. Do the same steps as when replicating the experiments but also export corresponding .nrrd files to data/preprocessedData/GT. The datasets in 3rdPartyData are not used in training.
+2. Create training data via the ground truth masks. Run:
+
+```
+python SegmenterCode/training_data_creation.py --mask_type 3
+```
+
+Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge masks or 3D edge masks. Training samples are saved to /data/trainingData/, inside a subfolder which specifies the mask type.    
+
+3. Train 3D or 2D U-Net for masking. Run:
+
+```
+python SegmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1
+```
+
+Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the number of the testing spheroid, and saved along the configuration and history files in /models/U_M3DE.
+

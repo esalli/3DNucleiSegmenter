@@ -1,0 +1,2 @@
+Python files to compute evaluation scores (seg.py, stats_utils.py) and to evaluate conventional watershed methods
+Evaluation of conventional methods requires that noise filtered images are created during preprocessing (scripts ../preprocessCode/*Filtering.py)

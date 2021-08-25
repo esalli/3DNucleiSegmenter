@@ -1,0 +1,20 @@
+
+README
+
+Run the pre-processing scripts in following order (note, you need to have downloaded the data separately)
+ 
+For the 12 spheroids:
+
+python expandImages.py 		# Makes data more isotropic by adding slices between existing slices. For spheroids, bilinear interpolation is used. For ground truth, a contour interpolation method is used (not needed if using downloaded data)
+python nucleiMarkersIso.py  # Creates markers for training (not needed if using downloaded data)
+
+For the independent datasets:
+
+python preprocessIndependentDatasets.py
+
+
+If you want to create filtered datasets to evaluate the conventional baseline methods run:
+python bilateralFiltering.py
+python gradientAnisotropicDiffusionFiltering.py
+npython onlocalmeansFiltering.py
+

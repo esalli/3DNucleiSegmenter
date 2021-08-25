@@ -1,0 +1,6 @@
+Download from figshare or run preprocessing scripts
+
+
+*_GT.nrrd ground truth image
+*_GT_expanded_3_DT.nrrd ground truth images exapnded using countourInterpolation (expand.py)
+
