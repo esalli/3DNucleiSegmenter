@@ -2,6 +2,24 @@
 
 Segmentation of 3D Nuclei
 
+## Prerequisities
+
+A python environment with several python packages is required.
+A relatively easy way to setup the python environment install to Anaconda and activate it
+
+Create an environment and install packages
+```
+conda create -n 3DNS python=3.8
+conda activate 3DNS
+coda install git
+```
+Clone the repository
+```
+git clone https://github.com/esalli/3DNucleiSegmenter
+```
+
+
+
 ## Replication of the results of the system configurations
 
 1. Acquire data. Export corresponding .nrrd files to data/preprocessedData/seeds, data/preprocessedData/spheroids, data/sourceData/GT, data/independentData/datasets and data/3rdPartyData/GT. Here, 3rdPartyData refers to the independent datasets.
