@@ -4,20 +4,25 @@ Segmentation of 3D Nuclei
 
 ## Prerequisities
 
-A python environment with several python packages is required.
-A relatively easy way to setup the python environment install to Anaconda and activate it
+A python environment with several python packages is required to run 3DNucleiSegmenter.
+A one to setup the python environment is to install Anaconda  (www.anaconda.com), activate it and create an enviroment (called here 3DNS)
 
 Create an environment and install packages
 ```
 conda create -n 3DNS python=3.8
 conda activate 3DNS
-coda install git
+coda install git unzip
 ```
-Clone the repository
+Clone the repository from github
 ```
 git clone https://github.com/esalli/3DNucleiSegmenter
 ```
+Download the data of 12 spheroids from https://figshare.com/s/8a7604b77f4d41e9267c
+Extract thr spheroids.zip into data/preprocessedData: unzip spheroids.zip
 
+Download the Independet datasets:
+1 Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
+Extarct the LiverSpheroid.zip  into data/independentData: unzip LiverSpheroid.zip
 
 
 ## Replication of the results of the system configurations
