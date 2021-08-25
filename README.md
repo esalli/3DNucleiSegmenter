@@ -83,7 +83,9 @@ Recreate the seeds (optional as they are already included in the 12spheroids.zip
 3DNucleiSegmenter/preprocessCode$ python nucleiMarkersIso.py
 ```
 Preprocess the independent datasets (optional; required only to evaluate the independent datasets, not needed in training)
-
+```
+3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
+```
 
 Create filtered images (optional; required only for the evaluation of the conventional watershed based baseline methods) 
 ```
