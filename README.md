@@ -14,6 +14,7 @@ conda activate 3DNS
 conda install git unzip numpy
 conda install -c simpleitk simpleitk
 conda install -c conda-forge pynrrd
+conda install -c anaconda joblib
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
@@ -94,10 +95,10 @@ python segmenterCode/mask_nuclei.py --dataset 0 --model_type 2
 ```
 Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks, 2D edge masks or seeds, respectively. Dataset can be 0 or 1 with 0 corresponding to the 12 spheroids and 1 to the independent datasets. Masks are generated to data/maskedData folder. 
 
-4. Perform segmentation. Run:
+2. Perform segmentation. Run:
 
 ```
-python SegmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
+python segmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
 
 Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use of either A (0), B (1) or C (2) watershed method, mask_type can be either M3D, M3DE, M2DE or S, opt_mode as 0 refers to the use of roundness score and as 1 to the use of optimal score and save_segms specifies whether the segmentation outputs are saved to data/segmentedData. The script simultaneously runs evaluation and the evaluation scores are written to a numpy file which is located in data/evaluationScores. With the arguments specified above, the file would be named as B|M3DE|0|0.npy. To print out the scores, one can run:
@@ -122,8 +123,8 @@ The output should be the following:
 
 ## Training of U-Nets from scratch
 
-1. Acquire data. Do the same steps as when replicating the experiments but also export corresponding .nrrd files to data/preprocessedData/GT. The datasets in independentData are not used in training.
-2. Create training data via the ground truth masks. Run:
+
+1. Create training data via the ground truth masks. Run:
 
 ```
 python SegmenterCode/training_data_creation.py --mask_type 3
@@ -131,7 +132,7 @@ python SegmenterCode/training_data_creation.py --mask_type 3
 
 Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge masks or 3D edge masks. Training samples are saved to /data/trainingData/, inside a subfolder which specifies the mask type.    
 
-3. Train 3D or 2D U-Net for masking. Run:
+2. Train 3D or 2D U-Net for masking. Run:
 
 ```
 python SegmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1
