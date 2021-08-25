@@ -22,8 +22,10 @@ git clone https://github.com/esalli/3DNucleiSegmenter
 
 Download the data of 12 spheroids from https://figshare.com/s/8cd49182fcac2f37b6bc
 
-Extract thr spheroids.zip into data/preprocessedData: unzip spheroids.zip
-
+Extract the spheroids.zip into data/preprocessedData: 
+```
+3DNucleiSegmenter/data/preprocessedData$ unzip spheroids.zip
+```
 Download the Independet datasets:
 
 Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
@@ -42,11 +44,6 @@ Extract the zip files into data/independentData/3DCellAnnotator
 ```
 3DNucleiSegmenter/data/independentData/3DCellAnnotator$ unzip Neurosphere_Dataset.zip review_binary3dmasks.zip 
 ```
-
-Download Embryo (4May15FGFRionCD1_SU54_LM1.lsm) from https://ndownloader.figshare.com/files/5886078 into data/independentData/3DCellAnnotator
-
-
-Download  4May15FGFRionCD1_SU54_LM1.lsm as Dataset "A": 3D embryo with 56 cells, confocal Dataset from http://www.3d-cell-annotator.org/download.html or directly from https://ndownloader.figshare.com/files/5886078
 
 
 ## Replication of the results of the system configurations
