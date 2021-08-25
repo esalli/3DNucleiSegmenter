@@ -83,11 +83,9 @@ Create filtered images (optional; required only for the evaluation of the conven
 
 ## Replication of the results of the system configurations
 
-1. Acquire data. Export corresponding .nrrd files to data/preprocessedData/seeds, data/preprocessedData/spheroids, data/sourceData/GT, data/independentData/datasets and data/independentData/GT
-2. Acquire prebuilt models. Export corresponding .h5 files to prebuiltModels/U_M2DE, prebuiltModels/U_M3DE, prebuiltModels/U_M3D and prebuiltModels/S.
-3. Perform masking. Navigate to the root and run:
+1. Perform masking. Navigate to the root and run:
 ```
-python SegmenterCode/mask_nuclei.py --dataset 0 --model_type 2
+python segmenterCode/mask_nuclei.py --dataset 0 --model_type 2
 ```
 Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks, 2D edge masks or seeds, respectively. Dataset can be 0 or 1 with 0 corresponding to the 12 spheroids and 1 to the independent datasets. Masks are generated to data/maskedData folder. 
 
