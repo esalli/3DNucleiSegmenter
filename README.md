@@ -15,7 +15,11 @@ conda install git unzip numpy
 conda install -c simpleitk simpleitk
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
+conda install tensorflow-gpu
 ```
+You may need to install specific version of tensorflow. If you don't have GPUSs, install CPU only version ('tensorflow'). The CPU only version is too slow to be used to train the models but segmentation using the provided prebuilt models should still be possible.  
+
+
 Clone the repository from github
 ```
 git clone https://github.com/esalli/3DNucleiSegmenter
