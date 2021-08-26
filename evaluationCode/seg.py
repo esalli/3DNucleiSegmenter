@@ -67,7 +67,7 @@ def get_JI(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
         labels = labels[1:]
         lab_counts = lab_counts[1:]
     
-    # Calculate SEG     
+    # Calculate JI     
     if compute_parallel:
         scores = Parallel(n_jobs=num_jobs)(delayed(cell_SEG)(lab, lab_counts[index], S, R)
                     for index, lab in enumerate(labels))
