@@ -140,7 +140,10 @@ if __name__ == '__main__':
     data_dire = data_dires[args.dataset]
     data_files = []
     os.chdir(data_dire)
-    d_files = glob.glob("*.nrrd")
+    if args.dataset == 0:
+        d_files = glob.glob("*expanded*")
+    else:
+        d_files = glob.glob("*.nrrd")
     for file in d_files:
         data_files.append(file)
 
