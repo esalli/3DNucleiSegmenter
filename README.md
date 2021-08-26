@@ -99,7 +99,7 @@ Create filtered images (optional; required only for the evaluation of the conven
 
 1. Perform masking. Navigate to the root and run:
 ```
-python segmenterCode/mask_nuclei.py --dataset 0 --model_type 2
+python segmenterCode/mask_nuclei.py --dataset 0 --model_type 1
 ```
 Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks, 2D edge masks or seeds, respectively. Dataset can be 0 or 1 with 0 corresponding to the 12 spheroids and 1 to the independent datasets. Masks are generated to data/maskedData folder. 
 
