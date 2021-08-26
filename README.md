@@ -16,7 +16,7 @@ conda install -c simpleitk simpleitk
 conda install -c conda-forge pynrrd
 conda install -c anaconda joblib
 conda install scikit-image
-conda install -c conda-forge opencv
+conda install -c conda-forge/label/cf202003 opencv
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
