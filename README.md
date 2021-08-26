@@ -120,7 +120,7 @@ for key in m.keys():
     print(key, score)
 ```
 
-The output should be the following:
+The output should be the following (order of the lines may differ):
 
 ```
 1 (0.8257529521029587, 0.8214707346717058, 0.8247556355877674, 0.02666666666666667, 1.5)
