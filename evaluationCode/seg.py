@@ -4,7 +4,6 @@ from scipy.optimize import linear_sum_assignment
 from joblib import Parallel, delayed
 
 import cv2
-import matplotlib.pyplot as plt
 
 "JI by Tuomas Kaseva, 11.6.2021"
 
@@ -49,9 +48,7 @@ def get_JI(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
     '''
     SEG-score based on:
     https://public.celltrackingchallenge.net/documents/SEG.pdf
-
     Arguments:
-
     R = reference segmentation labels
     S = predicted segmentation labels
     num_jobs = Number of jobs for parallel processing
@@ -138,9 +135,7 @@ def get_SEG(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
     '''
     SEG-score based on:
     https://public.celltrackingchallenge.net/documents/SEG.pdf
-
     Arguments:
-
     R = reference segmentation labels
     S = predicted segmentation labels
     num_jobs = Number of jobs for parallel processing
@@ -174,5 +169,4 @@ def get_SEG(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
     seg = np.mean(scores[:, 0])
     
     return seg, scores
-
 
