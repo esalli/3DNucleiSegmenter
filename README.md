@@ -16,6 +16,7 @@ conda install -c simpleitk simpleitk
 conda install -c conda-forge pynrrd
 conda install -c anaconda joblib
 conda install -c conda-forge/label/cf202003 opencv
+conda install  tifffile=2020.10.1
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
