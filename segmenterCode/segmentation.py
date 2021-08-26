@@ -8,7 +8,7 @@ import sys
 # import nibabel as nib
 import glob
 from joblib import Parallel, delayed
-from skimage.measure import label
+# from skimage.measure import label
 import argparse
 import SimpleITK as sitk
 import cv2
