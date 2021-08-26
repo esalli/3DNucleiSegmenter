@@ -1,9 +1,6 @@
-import warnings
-import numpy as np
-from scipy.optimize import linear_sum_assignment
-from joblib import Parallel, delayed
 
-import cv2
+import numpy as np
+from joblib import Parallel, delayed
 
 "JI by Tuomas Kaseva, 11.6.2021"
 
