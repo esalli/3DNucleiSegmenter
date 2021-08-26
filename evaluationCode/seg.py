@@ -62,9 +62,10 @@ def get_JI(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
     R = R+1
     labels, lab_counts = np.unique(R, return_counts= True) 
 
-    # Exclude background
-    labels = labels[1:]
-    lab_counts = lab_counts[1:]
+    if len(labels)>1:
+        # Exclude background
+        labels = labels[1:]
+        lab_counts = lab_counts[1:]
     
     # Calculate SEG     
     if compute_parallel:
