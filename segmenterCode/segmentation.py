@@ -403,7 +403,7 @@ if __name__ == '__main__':
         GT_kw = "_".join([data_idx, "GT."])
         seeds_kw = "_".join([data_idx,model_idx,keyword])
         GT_file = glob.glob(GT_dire + "/" + GT_kw + "*")[0]
-        if args.ws_method == "B": # no seeds used
+        if args.ws_method == 1: # no seeds used
             seeds_file = 0
         else:
             seeds_file = glob.glob(seeds_dire + "/" + seeds_kw + "*")[0]
