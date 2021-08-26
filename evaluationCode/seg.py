@@ -43,7 +43,7 @@ def cell_JI(label, lab_count, S, R):
 def get_JI(R, S, num_jobs = 4, verbose = False, compute_parallel = False):
 
     '''
-    SEG-score based on:
+    Jaccard Index score based on:
     https://public.celltrackingchallenge.net/documents/SEG.pdf. 
     Assumes that background is labeled as 0.
     Arguments:
