@@ -1,19 +1,8 @@
 # obtained from https://github.com/vqdang/hover_net/
 # https://arxiv.org/pdf/1812.06499.pdf
-
-
-#Functions below are from HoVer-Net by vqdang
-#Use permitted by MIT licence
-#Source:  https://github.com/vqdang/hover_net/
-# https://arxiv.org/pdf/1812.06499.pdf
-
-import warnings
 import numpy as np
 from scipy.optimize import linear_sum_assignment
-
 import cv2
-import matplotlib.pyplot as plt
-
 
 
 # --------------------------Optimised for Speed
