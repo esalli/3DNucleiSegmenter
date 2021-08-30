@@ -93,9 +93,17 @@ Create filtered images (optional; required only for the evaluation of the conven
 3DNucleiSegmenter/preprocessCode$ python gradientAnisotropicDiffusionFiltering.py
 3DNucleiSegmenter/preprocessCode$ python nonlocalmeansFiltering.py
 ```
+## Perform segemetnation using conventional  methods ((optional; required only for the evaluation of the conventional watershed based baseline methods)
+Run
+```
+3DNucleiSegmenter/evaluationCode$ python  evaluationBilateralFilteringWatershed.py
+3DNucleiSegmenter/evaluationCode$ python evaluationAnisotropicFilteringWatershed.py
+3DNucleiSegmenter/evaluationCode$ python evaluationNonlocalMeansFilteringWatershed.py
+3DNucleiSegmenter/evaluationCode$ python evaluationNoFilteringWatershed.py
+```
+The evaluation scores are saved to files 3DNucleiSegmenter/data/evaluationScores/*.txt
 
-
-## Replication of the results of the system configurations
+## Replication of the results of the proposed system configurations
 
 1. Perform masking. Navigate to the root and run:
 ```
@@ -109,7 +117,7 @@ Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks
 python segmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
 
-Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use of either A (0), B (1) or C (2) watershed method, mask_type can be either M3D, M3DE, M2DE or S, opt_mode as 0 refers to the use of roundness score and as 1 to the use of optimal score and save_segms specifies whether the segmentation outputs are saved to data/segmentedData/spheroids. The script simultaneously runs evaluation and the evaluation scores are written to a numpy file which is located in data/evaluationScores. With the arguments specified above, the file would be named as B|M3DE|0|0.npy. To print out the scores, one can run:
+Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use of either A (0), B (1) or C (2) watershed method, mask_type can be either M3D, M3DE, M2DE or S, opt_mode as 0 refers to the use of roundness score and as 1 to the use of optimal score and save_segms specifies whether the segmentation outputs are saved to data/segmentedData/spheroids when "--dataset 0" option is used. The script simultaneously runs evaluation and the evaluation scores are written to a numpy file which is located in data/evaluationScores. With the arguments specified above, the file would be named as B|M3DE|0|0.npy. To print out the scores, one can run:
 
 ```
 import numpy as np
@@ -148,3 +156,16 @@ python SegmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_s
 
 Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the number of the testing spheroid, and saved along the configuration and history files in /models/U_M3DE.
 
+## Segmenting additional (own) datasets
+
+Modify preprocessCode/preprocessAdditionalDatasets.py and add the new data into into the script by following the comments in the file. 
+```
+3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
+```
+Check the results in data/independentData/datasets and data/independentData/GT. Note that if there is no ground truthm the ground truth image in GT will contain only zeroes
+
+Perform segmentation. Run e.g.
+```
+python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
+```
+The results will be save to directory data/segmentedData/datasets.
