@@ -4,7 +4,7 @@
 
 import os
 import numpy as np
-import nibabel as nib
+#import nibabel as nib
 import glob
 from joblib import Parallel, delayed
 from skimage.segmentation import find_boundaries
