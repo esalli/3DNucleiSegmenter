@@ -87,13 +87,13 @@ Preprocess the independent datasets (optional; required only to evaluate the ind
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
 ```
 
-Create filtered images (optional; required only for the evaluation of the conventional watershed based baseline methods) 
+Create filtered images (optional; required only for the evaluation of the conventional (without deep learning) watershed based baseline methods) 
 ```
 3DNucleiSegmenter/preprocessCode$ python  bilateralFiltering.py
 3DNucleiSegmenter/preprocessCode$ python gradientAnisotropicDiffusionFiltering.py
 3DNucleiSegmenter/preprocessCode$ python nonlocalmeansFiltering.py
 ```
-## Perform segemetnation using conventional  methods ((optional; required only for the evaluation of the conventional watershed based baseline methods)
+## Perform segemetnation using conventional  methods (optional; required only for the evaluation of the conventional methods)
 Run
 ```
 3DNucleiSegmenter/evaluationCode$ python  evaluationBilateralFilteringWatershed.py
