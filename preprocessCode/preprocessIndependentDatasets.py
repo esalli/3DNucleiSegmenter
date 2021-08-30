@@ -49,7 +49,7 @@ independentinfo.append(independent)
 
 independent={
   "independentFilename": "BroadInstitute/AICS_12_134_C=2.tif",
-  "GTFilename": "BroadInstitute/ground_truth_segmented.tif",  
+  "GTFilename": "BroadInstitute/ground_truth_segmented.tif",    
   "expandFactor": 1,
   "spacing": (0.65,0.65,2.9),
   "intensityClipping": 255,
@@ -57,7 +57,16 @@ independent={
 
 independentinfo.append(independent)
 
+###You can add your own data here by uncommenting and modifying the following lines
+###If you don't have ground truth, don't specify GTFilename. An empty ground truth will be created as placeholder
 
+independent={
+  "independentFilename": "BroadInstitute/AICS_12_134_C=2.tif",
+  "expandFactor": 1,
+  "spacing": (0.65,0.65,2.9),
+  "intensityClipping": 255,
+}
+independentinfo.append(independent)
 
 
 
@@ -65,7 +74,7 @@ independentinfo.append(independent)
 
 # Independent data used
 
-for sph in range(0,4):
+for sph in range(0,len(independentinfo)):
 
 
     
@@ -94,7 +103,11 @@ for sph in range(0,4):
   if "spacing" in independentinfo[sph]:
         independent.SetSpacing(independentinfo[sph]["spacing"])
   
-  GT=sitk.ReadImage(c.SOURCE_ADD_EVAL_DATADIR+independentinfo[sph]["GTFilename"]) 
+  if "GTFilename" in independentinfo[sph]:
+    GT=sitk.ReadImage(c.SOURCE_ADD_EVAL_DATADIR+independentinfo[sph]["GTFilename"])
+  else:
+    GT=0*sitk.Cast(independent,sitk.sitkUInt8)
+
   GT.SetOrigin([0.0,0.0,0.0])
   GT.SetDirection([1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0])
 
@@ -102,10 +115,10 @@ for sph in range(0,4):
  
     
     
-    
   if "intensityClipping" in independentinfo[sph]:
-    independent=sitk.Cast((independent<=independentinfo[sph]["intensityClipping"]),independent.GetPixelID())*independent
-  #downsample  
+    #independent=sitk.Cast((independent<=independentinfo[sph]["intensityClipping"]),independent.GetPixelID())*independent
+    independent=sitk.IntensityWindowing(independent,0.0,independentinfo[sph]["intensityClipping"],0.0,independentinfo[sph]["intensityClipping"])
+  #downsample
   new_size = [256,256,independent.GetSize()[2]]
     
   #resampling code snippet source: https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks/blob/master/Python/70_Data_Augmentation.ipynb
@@ -185,6 +198,5 @@ for sph in range(0,4):
   downsampledImage_bg0.SetOrigin(downsampledImage.GetOrigin())
 
   independentExpanded=sitk.Expand(downsampledImage_bg0,expandFactors=(1,1,independentinfo[sph]["expandFactor"]))
-  sitk.WriteImage(independent,c.PREPROCESSED_ADD_EVAL_INDEPENDENT_DATADIR+str(sph+1)+'_independent_non_expanded.nrrd',useCompression=True)
   sitk.WriteImage(independentExpanded,c.PREPROCESSED_ADD_EVAL_INDEPENDENT_DATADIR+str(sph+1)+'_independent_expanded.nrrd',useCompression=True)
   sitk.WriteImage(GT,c.PREPROCESSED_ADD_EVAL_GT_DATADIR+str(sph+1)+'_GT.nrrd',useCompression=True)
