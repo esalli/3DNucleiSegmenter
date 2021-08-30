@@ -20,6 +20,7 @@ conda install  tifffile=2020.10.1
 python -m pip install --upgrade pip
 python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
+conda install -c anaconda scikit-image
 ```
 You may need to install specific version of tensorflow. If you don't have GPU hardware, install CPU only version ('tensorflow'). The CPU only version is too slow for training the models but segmentation using the provided prebuilt models should still be possible.  
 
@@ -143,7 +144,7 @@ The output should be the following (order of the lines may differ):
 1. Create training data via the ground truth masks. Run:
 
 ```
-python SegmenterCode/training_data_creation.py --mask_type 3
+python segmenterCode/training_data_creation.py --mask_type 3
 ```
 
 Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge masks or 3D edge masks. Training samples are saved to /data/trainingData/, inside a subfolder which specifies the mask type.    
@@ -151,21 +152,21 @@ Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge ma
 2. Train 3D or 2D U-Net for masking. Run:
 
 ```
-python SegmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1
+python segmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1
 ```
 
 Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the number of the testing spheroid, and saved along the configuration and history files in /models/U_M3DE.
 
-## Segmenting additional (own) datasets
+## Segmenting new (own) datasets
 
-Modify preprocessCode/preprocessAdditionalDatasets.py and add the new data into into the script by following the comments in the file. 
+At this stage, it it required to modify preprocessCode/preprocessAdditionalDatasets.py to segment own data. Follow the instruction given in the comments in the file to add datasets into the processing pipeline.  After editing the file, run
 ```
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
 ```
-Check the results in data/independentData/datasets and data/independentData/GT. Note that if there is no ground truthm the ground truth image in GT will contain only zeroes
+Check the results in data/independentData/datasets and data/independentData/GT. You can view the nrrd files by 3D Slicer (www.slicer.org). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
 
-Perform segmentation. Run e.g.
+After the preprocessing, perform segmentation by running e.g.
 ```
 python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
-The results will be save to directory data/segmentedData/datasets.
+The results will be saved into  the directory data/segmentedData/datasets. An easier way to segment new datasets will be added later to 3DNucleiSegmenter.
