@@ -49,7 +49,7 @@ if __name__ == '__main__':
     parser.add_argument("--augment_params", type = str, help="1: whether to do augmentation, 2: whether to normalize, 3: whether to use artificial data (old): ", 
     default ="1,1,0")
     parser.add_argument("--unet_params", type = str, help="1: Number of filters in NN-layers, 2: Number of layers in the encoder, 3: Number of convolutional blocks in the encoder and decoder layers", 
-    default = "28,5, 3")
+    default = "16,5, 3")
     parser.add_argument("--pretrained", help="Load pretrained model given as a string pointing to the model filepath", 
     default = None) 
     parser.add_argument("--seeds", type = str, help="Check the reproducibility section of https://keras.io/getting_started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development",
