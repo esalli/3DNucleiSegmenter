@@ -2,7 +2,7 @@
 
 Segmentation of 3D Nuclei
 
-![3DNS](visual_demon.png)
+![3DNS](visual_demon_v2.png)
 
 ## Prerequisities
 
