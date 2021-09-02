@@ -157,7 +157,7 @@ Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge ma
 python segmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1 --batch_size 4
 ```
 
-Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the number of the testing spheroid, and saved along the configuration and history files in /models/U_M3DE. To ensure that the same arguments are used as in our experiments, see the config files in the /prebuiltModels.
+Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the id number of the testing spheroid, and saved along the configuration and history files in models/U_M3DE. To ensure that the same arguments are used as in our experiments, see the config files in the prebuiltModels.
 
 ## Segmenting new (own) datasets
 
@@ -171,4 +171,4 @@ After the preprocessing, perform segmentation by running segmentation.py, e.g.
 ```
 python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
-The results will be saved into  the directory data/segmentedData/datasets. An easier way to segment new datasets will be added later to 3DNucleiSegmenter.
+The results will be saved into  the directory fata/segmentedData/datasets. An easier way to segment new datasets will be added later to 3DNucleiSegmenter.
