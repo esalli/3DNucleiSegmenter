@@ -70,7 +70,7 @@ if __name__ == '__main__':
     mask_type = mask_types[args.mask_type]
     data_dir = os.path.join(root,"data/trainingData/"+mask_type)
     model_dir = os.path.join(root, "models", "U_" + mask_type)
-    split_file = os.path.join(root, "SegmenterCode/cell_split.npy")
+    split_file = os.path.join(root, "segmenterCode/cell_split.npy")
 
     # Parse unet parameters
     params = args.unet_params.split(",")
