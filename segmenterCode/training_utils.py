@@ -9,6 +9,7 @@ from scipy.ndimage import zoom, rotate, shift
 import tensorflow.keras as keras
 import SimpleITK as sitk
 import time
+import glob
 tf.compat.v1.disable_eager_execution() # For faster data loading
 
 
@@ -34,7 +35,7 @@ def val_test_split(data_dir, val_test_split, split_file = "/wrk/group/HUS/tkasev
 
     # Organize files
     os.chdir(data_dir)
-    files = os.listdir()
+    files = glob.glob("*.npy")
     for file in files:
         pat = file.split("_")[0]
         file_loc = os.path.join(data_dir, file)
