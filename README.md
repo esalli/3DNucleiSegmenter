@@ -161,13 +161,13 @@ Mask_type arguments is the same as in training_data_creation.py, model_type is e
 
 ## Segmenting new (own) datasets
 
-At this stage, it it required to modify preprocessCode/preprocessAdditionalDatasets.py to segment own data. Follow the instruction given in the comments in the file to add datasets into the processing pipeline.  After editing the file, run
+At this stage, it is required to modify the file preprocessCode/preprocessAdditionalDatasets.py to segment new data. Follow the instruction given in the comments of the file to add datasets into the processing pipeline.  After editing the file, run
 ```
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
 ```
 Check the results in data/independentData/datasets and data/independentData/GT. You can view the nrrd files by 3D Slicer (www.slicer.org). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
 
-After the preprocessing, perform segmentation by running e.g.
+After the preprocessing, perform segmentation by running segmentation.py, e.g.
 ```
 python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
