@@ -45,7 +45,7 @@ Extract the zip into the root of 3DNucleiSegmenter
 
 ### Download the data of 12 spheroids
 
-The data are availabe from https://figshare.com/s/8cd49182fcac2f37b6bc
+The data are available from https://figshare.com/s/8cd49182fcac2f37b6bc
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
@@ -96,7 +96,7 @@ Create filtered images (optional; required only for the evaluation of the conven
 3DNucleiSegmenter/preprocessCode$ python gradientAnisotropicDiffusionFiltering.py
 3DNucleiSegmenter/preprocessCode$ python nonlocalmeansFiltering.py
 ```
-## Perform segemetnation using conventional  methods (optional; required only for the evaluation of the conventional methods)
+## Perform segmentation using conventional  methods (optional; required only for the evaluation of the conventional methods)
 Run
 ```
 3DNucleiSegmenter/evaluationCode$ python  evaluationBilateralFilteringWatershed.py
