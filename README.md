@@ -2,6 +2,8 @@
 
 Segmentation of 3D Nuclei
 
+![3DNS](visual_demon.pdf)
+
 ## Prerequisities
 
 A python environment with several python packages is required to run 3DNucleiSegmenter.
