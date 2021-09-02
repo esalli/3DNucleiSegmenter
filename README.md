@@ -24,7 +24,7 @@ python -m pip install itk-morphologicalcontourinterpolation
 conda install tensorflow-gpu
 conda install -c anaconda scikit-image
 ```
-You may need to install specific version of tensorflow. If you don't have GPU hardware, install CPU only version ('tensorflow'). The CPU only version is too slow for training the models but segmentation using the provided prebuilt models should still be possible.  
+You may need to install specific version of the Tensorflow. If you don't have GPU hardware, install CPU only version ('tensorflow'). The CPU only version is too slow for training the models but segmentation using the provided prebuilt models should still be possible.  
 
 
 Clone the repository from github
