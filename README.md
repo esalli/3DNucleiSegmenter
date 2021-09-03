@@ -110,14 +110,14 @@ The evaluation scores are saved to files 3DNucleiSegmenter/data/evaluationScores
 
 1. Perform masking. Navigate to the root and run:
 ```
-python segmenterCode/mask_nuclei.py --dataset 0 --model_type 1
+3DNucleiSegmenter$ python segmenterCode/mask_nuclei.py --dataset 0 --model_type 1
 ```
 Model type is either 0,1,2 or 3 and refers to the use of 3D masks, 3D edge masks, 2D edge masks or seeds, respectively. Dataset can be 0 or 1 with 0 corresponding to the 12 spheroids and 1 to the independent datasets. Masks are generated to data/maskedData folder. 
 
 2. Perform segmentation. Run:
 
 ```
-python segmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
+3DNucleiSegmenter$ python segmenterCode/segmentation.py --dataset 0 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
 
 Dataset argument is the same as with mask_nuclei.py, ws_method refers to the use of either A (0), B (1) or C (2) watershed method, mask_type can be either M3D, M3DE, M2DE or S, opt_mode as 0 refers to the use of roundness score and as 1 to the use of optimal score and save_segms specifies whether the segmentation outputs are saved to data/segmentedData/spheroids when "--dataset 0" option is used. The script simultaneously runs evaluation and the evaluation scores are written to a numpy file which is located in data/evaluationScores. With the arguments specified above, the file would be named as B|M3DE|0|0.npy. To print out the scores, one can run:
@@ -146,7 +146,7 @@ The output should be the following (order of the lines may differ):
 1. Create training data via the ground truth masks. Run:
 
 ```
-python segmenterCode/training_data_creation.py --mask_type 3
+3DNucleiSegmenter$ python segmenterCode/training_data_creation.py --mask_type 3
 ```
 
 Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge masks or 3D edge masks. Training samples are saved to /data/trainingData/, inside a subfolder which specifies the mask type.    
@@ -154,7 +154,7 @@ Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge ma
 2. Train 3D or 2D U-Net for masking. Run:
 
 ```
-python segmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1 --batch_size 4
+3DNucleiSegmenter$ python segmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1 --batch_size 4
 ```
 
 Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the id number of the testing spheroid, and saved along the configuration and history files in models/U_M3DE. To ensure that the same arguments are used as in our experiments, see the config files in the prebuiltModels.
