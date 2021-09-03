@@ -1,6 +1,6 @@
 # 3DNucleiSegmenter
 
-A software to segment 3D Nuclei imaged using, e.g. the confocal microscopy
+A software to segment 3D Nuclei imaged using, e.g., the confocal microscopy
 
 ![3DNS](visual_demon_v2.png)
 
