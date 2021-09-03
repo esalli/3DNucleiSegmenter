@@ -171,7 +171,7 @@ After the preprocessing, perform segmentation by running segmentation.py, e.g.
 ```
 python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
-The results will be saved into  the directory fata/segmentedData/datasets. An easier way to segment new datasets will be added later to 3DNucleiSegmenter.
+The results will be saved into  the directory Data/segmentedData/datasets. A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
 
 
 ## Citing
