@@ -157,7 +157,7 @@ Mask_type is either 0,1,2 or 3 corresponding to deep seeds, 3D masks, 2D edge ma
 3DNucleiSegmenter$ python segmenterCode/training.py --mask_type 3 --model_type unet_3d --val_test_split 0,1 --batch_size 4
 ```
 
-Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the id number of the testing spheroid, and saved along the configuration and history files in models/U_M3DE. To ensure that the same arguments are used as in our experiments, see the config files in the prebuiltModels.
+Mask_type arguments is the same as in training_data_creation.py, model_type is either unet or unet_3d, in practice unet_3d with all mask types except the 2D edge masks and val_test_split specifies the indices of spheroids which are used for validation and testing. The model name would be specified here as U_M3DE_2.h5, where 2 specifies the id number of the testing spheroid, and saved along the configuration and history files in models/U_M3DE. To ensure that the same arguments are used as in our experiments, see the config.npy files in the prebuiltModels. Unfortunately, even with the same seeds we can not ensure that exactly the same network configurations will be trained.
 
 ## Segmenting new (own) datasets
 
