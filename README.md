@@ -33,7 +33,7 @@ git clone https://github.com/esalli/3DNucleiSegmenter
 ```
 
 ## Acquire models
-Download the prebuilt deep learning models from https://figshare.com/s/20531ed8e35c9a9b3add
+Download the prebuilt deep learning models from https://figshare.com/s/bc4ef58c8a620dd97f4f
 
 Extract the zip into the root of 3DNucleiSegmenter
 ```
@@ -45,7 +45,7 @@ Extract the zip into the root of 3DNucleiSegmenter
 
 ### Download the data of 12 spheroids
 
-The data are available from https://figshare.com/s/8cd49182fcac2f37b6bc
+The data are available from https://figshare.com/s/44cb448afa0ea6cff6e8
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
@@ -53,7 +53,7 @@ Extract the spheroids.zip into data/preprocessedData:
 ```
 ### Download the Independet datasets (optional):
 
-Liver spheroid from https://figshare.com/s/e64b456b00908d7a6751
+Liver spheroid from https://figshare.com/s/10ef32f9fd189111bbcd
 
 Extarct the LiverSpheroid.zip  into data/independentData: 
 ```
