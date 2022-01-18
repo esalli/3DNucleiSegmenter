@@ -165,7 +165,7 @@ At this stage, it is required to modify the file preprocessCode/preprocessAdditi
 ```
 3DNucleiSegmenter/data/independentData/datasets
 3DNucleiSegmenter/data/independentData/GT
-``
+```
 are empty from previous experiments and run
 ```
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
