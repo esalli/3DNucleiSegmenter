@@ -161,7 +161,7 @@ Mask_type arguments is the same as in training_data_creation.py, model_type is e
 
 ## Segmenting new (own) datasets
 
-The recommended file format for own datasets is NifTi of nrrd and the recommended DirectionMatrix is (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) (as returned by volume.GetDirection() in SimpleITK). At this stage, it is required to modify the file preprocessCode/preprocessAdditionalDatasets.py, or its modified copy, to segment new data. Follow the instruction given in the comments of the file to add datasets into the processing pipeline.  After editing the file, check that directories 
+The recommended file format for own datasets is NifTi or nrrd and the recommended DirectionMatrix is (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) (as returned by volume.GetDirection() of SimpleITK). At this stage, it is required to modify the file preprocessCode/preprocessAdditionalDatasets.py, or its modified copy, to segment new data. Follow the instruction given in the comments of the file to add datasets into the processing pipeline.  After editing the file, check that directories 
 ```
 3DNucleiSegmenter/data/independentData/datasets
 3DNucleiSegmenter/data/independentData/GT
@@ -172,7 +172,7 @@ are empty from previous experiments and run
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
 ```
 or your own modified preprocessing script.
-Check the results in data/independentData/datasets and data/independentData/GT. Especially, you may want to check that the resampling to the size of [256,256] is performed on correct axis. The size of GT files should match the original data. You can view the nrrd files by 3D Slicer (www.slicer.org).  The orientation of the new volumes may differ from the orientation of original volume (depending on the DirectionMatrix of original files). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
+Check the results in data/independentData/datasets and data/independentData/GT. Especially, you may want to check that the resampling to the size of [256,256] is performed on correct axis. The size of GT files should match the original data. You can view the nrrd files by 3D Slicer (www.slicer.org).  The orientation of the new datasets and GT volumes may differ from the orientation of original volume (depending on the DirectionMatrix of original files). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes.
 
 After the preprocessing, perform masking and segmentation, e.g.:
 ```
@@ -185,4 +185,5 @@ The results will be saved into  the directory 3DNucleiSegmenter/data/segmentedDa
 ## Citing
 
 If you use 3DNucleiSegmenter in your research, please cite the following paper:
+Kaseva et al: Marker-controlled Watershed with Deep Edge Emphasis and Optimized H-minima Transform for Automatic Segmentation of Densely Cultivated 3D Cell Nuclei. Submitted to BMC Bioinformatics.
 
