@@ -172,14 +172,14 @@ are empty from previous experiments and run
 3DNucleiSegmenter/preprocessCode$ python preprocessIndependentDatasets.py
 ```
 or your own modified preprocessing script.
-Check the results in data/independentData/datasets and data/independentData/GT. You may want to especially check that the resampling to the of [256,256] is performed on correct axis. The size of GT files should match the original data. You can view the nrrd files by 3D Slicer (www.slicer.org).  The orientation of the new volume may differ from the orientation of original volume (depending on the DirectionMatrix of original files). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
+Check the results in data/independentData/datasets and data/independentData/GT. Especially, you may want to check that the resampling to the size of [256,256] is performed on correct axis. The size of GT files should match the original data. You can view the nrrd files by 3D Slicer (www.slicer.org).  The orientation of the new volumes may differ from the orientation of original volume (depending on the DirectionMatrix of original files). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
 
-After the preprocessing, perform segmentation by running masking and segmentation.py, e.g.
+After the preprocessing, perform masking and segmentation, e.g.:
 ```
 3DNucleiSegmenter$ python segmenterCode/mask_nuclei.py --dataset 1 --model_type 1
 3DNucleiSegmenter$ python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
-The results will be saved into  the directory 3DNucleiSegmenter/data/segmentedData/datasets. Note that the orientations of the results will match the preprocessed files in 3DNucleiSegmenter/data/independentData/datasets and 3DNucleiSegmenter/data/independentData/GT  A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
+The results will be saved into  the directory 3DNucleiSegmenter/data/segmentedData/datasets. Note that the orientations of the results will match the preprocessed files in 3DNucleiSegmenter/data/independentData/datasets and 3DNucleiSegmenter/data/independentData/GT.  A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
 
 
 ## Citing
