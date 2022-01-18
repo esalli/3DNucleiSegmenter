@@ -161,7 +161,7 @@ Mask_type arguments is the same as in training_data_creation.py, model_type is e
 
 ## Segmenting new (own) datasets
 
-The recommended file format for own datasets is Nifti of nrrd and the recommended DirectionMatrix is (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) (as returned by volume.GetDirection() in SimpleITK) At this stage, it is required to modify the file preprocessCode/preprocessAdditionalDatasets.py, or its modified copy, to segment new data. Follow the instruction given in the comments of the file to add datasets into the processing pipeline.  After editing the file, check that directories 
+The recommended file format for own datasets is NifTi of nrrd and the recommended DirectionMatrix is (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0) (as returned by volume.GetDirection() in SimpleITK). At this stage, it is required to modify the file preprocessCode/preprocessAdditionalDatasets.py, or its modified copy, to segment new data. Follow the instruction given in the comments of the file to add datasets into the processing pipeline.  After editing the file, check that directories 
 ```
 3DNucleiSegmenter/data/independentData/datasets
 3DNucleiSegmenter/data/independentData/GT
