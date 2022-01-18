@@ -167,9 +167,10 @@ At this stage, it is required to modify the file preprocessCode/preprocessAdditi
 ```
 Check the results in data/independentData/datasets and data/independentData/GT. You can view the nrrd files by 3D Slicer (www.slicer.org). Note that if there is no ground truth specified, the ground truth image in GT will contain only zeroes
 
-After the preprocessing, perform segmentation by running segmentation.py, e.g.
+After the preprocessing, perform segmentation by running masking and segmentation.py, e.g.
 ```
-python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
+3DNucleiSegmenter$ python segmenterCode/mask_nuclei.py --dataset 1 --model_type 1
+3DNucleiSegmenter$ python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
 The results will be saved into  the directory Data/segmentedData/datasets. A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
 
