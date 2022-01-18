@@ -178,7 +178,7 @@ After the preprocessing, perform segmentation by running masking and segmentatio
 3DNucleiSegmenter$ python segmenterCode/mask_nuclei.py --dataset 1 --model_type 1
 3DNucleiSegmenter$ python segmenterCode/segmentation.py --dataset 1 --ws_method 1 --mask_type M3DE --opt_mode 0 --save_segms 1
 ```
-The results will be saved into  the directory Data/segmentedData/datasets. A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
+The results will be saved into  the directory 3DNucleiSegmenter/data/segmentedData/datasets. Note that the orientations of the results will match the preprocessed files in 3DNucleiSegmenter/data/independentData/datasets and 3DNucleiSegmenter/data/independentData/GT  A more straightforward way to segment new datasets will be added later to 3DNucleiSegmenter.
 
 
 ## Citing
