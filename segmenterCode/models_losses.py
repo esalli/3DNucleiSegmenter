@@ -116,6 +116,18 @@ def bin_crossentropy(y, y_pred):
  
     return loss
 
+def bin_crossentropy_unetw(y, y_pred):
+
+    # Separate labels and weight mask
+    sample_weight = y[:, ..., 1, np.newaxis]
+    y_true = y[:, ..., 0]
+
+
+    loss = K.binary_crossentropy(y_true[:, ..., np.newaxis], y_pred)
+    loss = sample_weight*loss
+ 
+    return loss
+
 
 def dice_loss(y_true, y_pred, squared = True, smooth = 1):
 
