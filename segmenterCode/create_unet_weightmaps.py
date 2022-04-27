@@ -13,8 +13,6 @@ from skimage.segmentation import find_boundaries
 from joblib import Parallel, delayed
 
 
-# Directory
-# cd /home/tuomaskaseva/Documents/HUS_tkaseva/scripts
 
 # ===============================================
 #            Functions
