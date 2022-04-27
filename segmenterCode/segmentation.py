@@ -11,6 +11,7 @@ import argparse
 import SimpleITK as sitk
 import cv2
 import nrrd
+from skimage.measure import label
 
 root = os.getcwd()
 sys.path.insert(1, os.path.join(root, 'evaluationCode'))
@@ -28,7 +29,6 @@ def general_watershed(mask_img, seeds_img = 0, thold = 0.5, ws_level = 1, prepro
     '''
     PURPOSE:
     Function performs either H-minima transform backed or marker-based watershed.
-
     ARGUMENTS: 
     mask_img = Nuclei mask, can be binary or normalized to [0,1] in SITK format.
     seeds_img = Multiclass segmentation of seeds or normalized to [0, 1] in SITK format.
@@ -36,7 +36,6 @@ def general_watershed(mask_img, seeds_img = 0, thold = 0.5, ws_level = 1, prepro
     ws_level = h-value used in the morphological watershed.
     preproc_seeds = Whether to label seeds with connected components filter.
     remove_small = Whether to remove segmented objects with less than 5% volume of the average segmentation.
-
     OUTPUTS: 
     segm_img = Segmented nuclei in SITK format.
     '''
@@ -96,7 +95,6 @@ def get_stats(segm_img):
     
     ARGUMENTS: 
     segm_img = Segmented nuclei in SITK format.
-
     OUTPUTS: 
     avg_rdness = Average roudness over all segmented nuclei.
     avg_size = Average size of the segmented nuclei.
@@ -126,13 +124,11 @@ def segment_nuclei(mask_img, seeds_img = 0, thold = 0.5, ws_method = 0, ws_level
     '''
     PURPOSE:
     Segments nuclei using one of the three options specified by the mode.
-
     ARGUMENTS: 
     mask_img = Nuclei mask, can be binary or normalized to [0,1] in SITK format.
     seeds_img = Initial segmentation of seeds, can be binary or normalized to [0,1] in SITK format.
     ws_method = 0: Marked-based watershed with NN-generated seeds, 1: H-minima transfrom backed watershed using mask only, 2: Marked-based watershed with 
     H-minima transfrom backed watershed postprocessed NN-generated seeds.
-
     OUTPUTS: 
     segm_img = Segmented nuclei.
     '''
@@ -149,19 +145,33 @@ def segment_nuclei(mask_img, seeds_img = 0, thold = 0.5, ws_method = 0, ws_level
 
     return segm_img
 
+def CC_segment_nuclei(mask_img, thold = 0.5):
+
+    '''
+    PURPOSE: Pefform instance segmentation using binary nuclei masks ansd connected component analysis.
+    ARGUMENTS:
+    mask_img = Nuclei mask, can be binary or normalized to [0,1] in SITK format.
+    '''
+    segm_img = mask_img>thold
+    segm = sitk.GetArrayFromImage(segm_img)
+    segm = label(segm)
+    segm_img = sitk.GetImageFromArray(segm)
+    segm_img.CopyInformation(mask_img)
+
+    return segm_img
+
+
 def get_optimal_segm(segm_imgs, ws_levels, opt_mode = 1, GT_file = 0):
 
     '''
     PURPOSE:
     Find the segmentation with the best roudness score from a set of segmentations.
-
     ARGUMENTS: 
     segm_imgs = Set of nuclei segmentations in SITK format.
     ws_levels = Set of h-values.
     mode = 0: Marked-based watershed with NN-generated seeds, 1: Level-based watershed using, 2: Marked-based watershed with 
     level-based watershed postprocessed NN-generated seeds.
     opt_mode = 0: Optimize based on roundness, 1: Optimize based on evaluation scores.
-
     OUTPUTS: 
     opt_segm = Optimal (per roundness) segmentation of nuclei.
     opt_lev = Optimal (per roundness) h-value used when creating opt_segm.
@@ -178,7 +188,7 @@ def get_optimal_segm(segm_imgs, ws_levels, opt_mode = 1, GT_file = 0):
 
         # Based on evaluation metrics
         else:
-            aji, pq, seg, _ = evaluate(segm_img, GT_file, verbose = 0)
+            aji, _, _, pq, seg, _ = evaluate(segm_img, GT_file, verbose = 0)
             score = (aji+pq+seg)/3
 
         # "Insane" optimization
@@ -201,7 +211,6 @@ def evaluate(segm_img, GT_file, segm_dire = None, save_segms = False, indices = 
     '''
     PURPOSE:
     Compute AJI and PQ between the predicted segmentation and the ground truth.
-
     ARGUMENTS: 
     segm_img = Nuclei segmentation in SITK format.
     GT_file = Nifti-file of the ground truth.
@@ -209,7 +218,6 @@ def evaluate(segm_img, GT_file, segm_dire = None, save_segms = False, indices = 
     save_segms = Whether to save the segmentation.
     indices = [MAWAER identifier, data index, model index], used when saving the segmentation.
     verbose = Whether to print out results.
-
     OUTPUTS: 
     aji = Aggregated Jaccard Index.
     pq = Panoptic Quality.
@@ -244,7 +252,7 @@ def evaluate(segm_img, GT_file, segm_dire = None, save_segms = False, indices = 
     # Get evaluation scores
     r = remap_label(GTdata)
     s = remap_label(S)
-    pq = get_fast_pq(r,s)[0][2]
+    dq, sq, pq = get_fast_pq(r,s)[0]
     aji = get_fast_aji(r,s)
     ji, _ = get_JI(R = GTdata, S = S)
     nndp = 2*np.abs(r.max()-s.max())/(r.max() + s.max())
@@ -257,8 +265,7 @@ def evaluate(segm_img, GT_file, segm_dire = None, save_segms = False, indices = 
 
     if verbose:
         GT_cont = GT_file.split("/")[-1]
-        print("Dataset index: ", GT_cont[0])
-        print("Number of components, reference and watershed")
+        print("Number of components, reference and predicted")
         print(r.max())
         print(s.max())
         print("AJI: ",aji)
@@ -273,7 +280,7 @@ def evaluate(segm_img, GT_file, segm_dire = None, save_segms = False, indices = 
         _, GT_h = nrrd.read(GT_file)
         nrrd.write(os.path.join(segm_dire, header), np.swapaxes(S,0,2).astype(np.uint16), header = GT_h)
 
-    return aji, pq, ji, nndp
+    return aji, dq, sq, pq, ji, nndp
 
 def segment_and_evaluate(mask_file, GT_file, seeds_file = 0, ws_method = 1, merge = True, opt_mode = 0, ws_levels = [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5], 
 segm_dire = None, save_segms = False,identif = None,verbose = True):
@@ -281,7 +288,6 @@ segm_dire = None, save_segms = False,identif = None,verbose = True):
     '''
     PURPOSE:
     Segment and get evaluation scores.
-
     ARGUMENTS: 
     mask_file = Nrrd file of mask segmentation.
     seeds_file = Nrrd file of seeds segmentation.
@@ -295,7 +301,6 @@ segm_dire = None, save_segms = False,identif = None,verbose = True):
     save_segms = Whether to save the segmentation.
     identif = Identifier describing the MAWAER configuration.
     verbose = Whether to print out results.
-
     OUTPUTS: 
     indices = indices of the dataset and the model
     aji = Aggregated Jaccard Index.
@@ -327,6 +332,10 @@ segm_dire = None, save_segms = False,identif = None,verbose = True):
         segm_img = segment_nuclei(mask_img=mask_img, seeds_img = seeds_img, ws_method = ws_method)
         opt_lev = 0
 
+    elif ws_method == 3:
+        segm_img = CC_segment_nuclei(mask_img=mask_img)
+        opt_lev = 0
+
     else:
         segm_imgs = []
         for ws_level in ws_levels:
@@ -336,9 +345,9 @@ segm_dire = None, save_segms = False,identif = None,verbose = True):
         segm_img, opt_lev = get_optimal_segm(segm_imgs, ws_levels, GT_file = GT_file, opt_mode = opt_mode)
 
     # Evaluate
-    aji, pq, ji, nnpd = evaluate(segm_img, GT_file, save_segms = save_segms, segm_dire = segm_dire, indices = [identif, indices[0], indices[1]])
+    aji, dq, sq, pq, ji, nndp = evaluate(segm_img, GT_file, save_segms = save_segms, segm_dire = segm_dire, indices = [identif, indices[0], indices[1]])
 
-    return indices, aji, pq, ji, nnpd, opt_lev
+    return indices, aji, pq, ji, nndp, opt_lev,
 
 
 
@@ -356,8 +365,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type = int, help="0: 12 spheroids, 1: independent datasets", default = 1)
-    parser.add_argument("--mask_type", type = str, help="M3D, M3DE or M2DE", default = "M2DE")
-    parser.add_argument("--ws_method", type = int, default =0, help="0: Marked-based watershed with NN-generated seeds, 1: H-minima transform backed watershed using only mask, 2: Marked-based watershed with H-minima transform backed watershed postprocessed NN-generated seeds.")
+    parser.add_argument("--mask_type", type = str, help="M3D, M3DE, M2DE or M3DEW", default = "M2DE")
+    parser.add_argument("--ws_method", type = int, default =0, help="0: Marked-based watershed with NN-generated seeds, 1: H-minima transform backed watershed using only mask, 2: Marked-based watershed with H-minima transform backed watershed postprocessed NN-generated seeds, 3: Connected component analysis of a given nuclei mask.")
     parser.add_argument("--opt_mode", type = int, default = 0, help="0: Optimize based on roundness, 1: Optimize based on evaluation scores, 2: Optimize based on worst scores")
     parser.add_argument("--verbose", type = int, help="Whether to print out run specifics", default = 1)
     parser.add_argument("--save_segms", type = int, help="Whether to save segmentations", default = 1)
@@ -374,7 +383,7 @@ if __name__ == '__main__':
     segm_dire = segm_dires[args.dataset]
 
     # Define identifier
-    ws_methods = {0: "A", 1: "B", 2: "C"}
+    ws_methods = {0: "A", 1: "B", 2: "C", 3: "D"}
     identif = "|".join([ws_methods[args.ws_method], args.mask_type, str(args.opt_mode), str(args.dataset)])
 
 
@@ -428,7 +437,4 @@ if __name__ == '__main__':
 
     os.chdir(dest_dire)
     np.save(identif, np.array(segm_res))
-
-
-        
 

@@ -4,7 +4,7 @@
 
 import os
 import numpy as np
-#import nibabel as nib
+import nibabel as nib
 import glob
 from joblib import Parallel, delayed
 from skimage.segmentation import find_boundaries
@@ -29,7 +29,7 @@ def label_converter(labels, mode = 1):
        labels[labels > 0]= 1
 
     # 3D masks with boundaries
-    elif mode == 3:
+    elif mode == 3 or mode == 4:
         bound = find_boundaries(labels.astype(np.uint16),connectivity=3,mode='outer').astype(np.uint8)
         ind = np.where(bound==1)
         labels[ind]=0
@@ -81,8 +81,11 @@ def data_gen(img_idx, mode = 1,
     seeds, hs = nrrd.read(os.path.join(root, "seeds", str(img_idx) + "_hugeMIiso_3_DT.nrrd"))
     seeds = np.swapaxes(seeds, 0, 2)
 
+    w_map, hw = nrrd.read(os.path.join(root, "wmaps", str(img_idx) + "_wmap.nrrd"))
+    w_map = np.swapaxes(w_map, 0, 2)
+
     # Choose y
-    if mode in [1,2,3]:
+    if mode in [1,2,3,4]:
         y = segm
     else:
         y = seeds
@@ -117,26 +120,27 @@ def data_gen(img_idx, mode = 1,
         part_lab = y[wind, ...]
         part_imag = X[wind, ...]
 
+        # U-Net weight map
+        if mode == 4:
+            part_wmap = w_map[wind, ...]
+        else:
+            part_wmap = np.ones(part_lab.shape)
+
+
         # Container initialization
         new_data = np.empty(3, dtype = object)
 
         if len(np.unique(part_lab)) > 1:
 
-            # Weight map - not used in the study
-            bound = find_boundaries(part_lab, mode = "thick").astype(np.uint8)
-            w_map = binary_dilation(bound, iterations = 3) 
-            #w_map = w_map + part_lab
-            #w_map[w_map > 1]=1
-
             # Fill
             if not mode == 2:
                 new_data[0]=np.swapaxes(part_lab.astype(np.uint8), 0, 2)
                 new_data[1]=np.swapaxes(part_imag.astype(np.float32), 0, 2)
-                new_data[2]=np.swapaxes(w_map.astype(np.uint8), 0, 2)
+                new_data[2]=np.swapaxes(part_wmap.astype(np.uint8), 0, 2)
             else:
                 new_data[0]=part_lab.astype(np.uint8)
                 new_data[1]=part_imag.astype(np.float32)
-                new_data[2]=w_map.astype(np.uint8)
+                new_data[2]=part_wmap.astype(np.uint8)
 
 
             # Save
@@ -156,7 +160,7 @@ Create the ground truth masks for training of U-Nets.
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mask_type", type = int, help="0: 3D seeds, 1: 3D masks, 2: 2D edge masks, 3: 3D edge masks", 
+    parser.add_argument("--mask_type", type = int, help="0: 3D seeds, 1: 3D masks, 2: 2D edge masks, 3: 3D edge masks, 4: 3D edge masks with U-Net weight maps.", 
     default = 3)
     parser.add_argument("--zdim", type = int, help="z-axis height of the patch", default = 24)
     args = parser.parse_args()
@@ -166,7 +170,7 @@ if __name__ == '__main__':
 
     # Define paths
     root_dir = os.path.join(root,"data/preprocessedData/")
-    mask_types = ["S", "M3D", "M2DE", "M3DE"]
+    mask_types = ["S", "M3D", "M2DE", "M3DE", "M3DEW"]
     mask_type = mask_types[args.mask_type]
     dest_dir = os.path.join(root,"data/trainingData/"+mask_type)
 

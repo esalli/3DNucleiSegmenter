@@ -9,6 +9,7 @@ from tensorflow.keras.models import load_model
 import argparse
 import nrrd
 import SimpleITK as sitk
+import time
 
 
 # ===============================================
@@ -117,8 +118,8 @@ Create either binary masks or seeds for the given data. Use either a different m
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type = int, help="0: 12 spheroids, 1: independent datasets", default = 1)
-    parser.add_argument("--model_type", type = int, help="0: U_M3D, 1: U_M3DE, 2: U_M2DE, 3: U_S", default = 0)
+    parser.add_argument("--dataset", type = int, help="0: 12 spheroids, 1: independent datasets, 2: test datasets", default = 1)
+    parser.add_argument("--model_type", type = int, help="0: U_M3D, 1: U_M3DE, 2: U_M2DE, 3: U_S, 4: U_M3DEW", default = 0)
     parser.add_argument("--verbose", type = int, help="Whether to print out run specifics", default = 1)
     args = parser.parse_args()
 
@@ -126,7 +127,7 @@ if __name__ == '__main__':
     root = os.getcwd()
 
     # Get models
-    model_types = ["U_M3D", "U_M3DE", "U_M2DE", "U_S"]
+    model_types = ["U_M3D", "U_M3DE", "U_M2DE", "U_S", "U_M3DEW"]
     model_type = model_types[args.model_type]
     model_dire = os.path.join(root, "prebuiltModels", model_type)
     model_files = []
@@ -136,7 +137,8 @@ if __name__ == '__main__':
         model_files.append(file)
 
     # Get data files
-    data_dires = [os.path.join(root,"data/preprocessedData/spheroids"), os.path.join(root, "data/independentData/datasets")]
+    data_dires = [os.path.join(root,"data/preprocessedData/spheroids"), os.path.join(root, "data/independentData/datasets"), 
+    os.path.join(root, "data/testData/datasets")]
     data_dire = data_dires[args.dataset]
     data_files = []
     os.chdir(data_dire)
@@ -148,7 +150,11 @@ if __name__ == '__main__':
         data_files.append(file)
 
     # Define destination
-    dest_dire = os.path.join(root, "data/maskedData", model_type)
+    if args.dataset == 2:
+        kw = "data/testMaskedData"
+    else:
+        kw = "data/maskedData"
+    dest_dire = os.path.join(root, kw, model_type)
     print(dest_dire)
 
     
@@ -182,7 +188,10 @@ if __name__ == '__main__':
 
 
             # Predict
+            start = time.time()
             op = NN_masker(sample_file, model, dest_dire, norm = True, pred_header = pred_header)
+            stop = time.time()
+            print(stop-start)
 
 
 
