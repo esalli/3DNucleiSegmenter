@@ -39,7 +39,6 @@ if 1==1:
   print("Processing spheroid ",sph)
   print("*********************************************************")
 
-    #spheroid = sitk.ReadImage(c.PREPROCESSED_SPHEROIDS_DATADIR+sph+'_spheroid_expanded.nrrd')
 
   GTfilename=c.PREPROCESSED_GT_DATADIR+sph+'_GT.nrrd'
 
