@@ -58,11 +58,6 @@ if 1==1:
 
      segm=segmenter_evaluator.segment_nuclei(mask_img=spheroid, seeds_img = [], thold = 0.5, ws_method = 1, ws_level = ws_level)
      
-     #segm.SetSpacing(spheroid.GetSpacing())
-     #print(segm)
-     #print("saving")
-     #sitk.WriteImage(segm,'segmoutput_'+sph+'_'+str(ws_level*100)+'.nrrd')
-     #print("saved")
      [aji, pq, ji, nndp] = segmenter_evaluator.evaluate(segm,GTfilename)
      
      print(sph,',',filename,',',ws_level,',',pq,',',aji,',',ji,',',nndp,file=f)  
