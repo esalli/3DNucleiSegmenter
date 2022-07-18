@@ -38,12 +38,12 @@ if __name__ == '__main__':
     parser.add_argument("--epochs",  type = int, default =200)
     parser.add_argument("--lrs",  type = str, help = "Initial learning rate, its decayers and the epochs were decays are performed.", default = "1e-3,5,10,75,110")
     parser.add_argument("--att_weight",  type = float, default =0, help ="Weight emphasis for the attentive Dice score")
-    parser.add_argument("--batch_size",  type = int, default =16)
+    parser.add_argument("--batch_size",  type = int, default =4)
     parser.add_argument("--model_type",  type = str, default = "unet")
     parser.add_argument("--model_header",  type = str, default = "U", help="Header to help memorization of the model")
-    parser.add_argument("--mask_type", type = int, help="0: 3D seeds, 1: 3D masks, 2: 2D edge masks, 3: 3D edge masks", 
+    parser.add_argument("--mask_type", type = int, help="0: 3D seeds, 1: 3D masks, 2: 2D edge masks, 3: 3D edge masks, 4: 3D edge masks with U-Net weight maps", 
     default = 3)
-    parser.add_argument("--loss",  type = str, default = "bin_cross")
+    parser.add_argument("--loss",  type = str, default = "bin_cross_unetw")
     parser.add_argument("--optimizer",  type = str, default = "adam")
     parser.add_argument("--val_test_split", type = str, help="Indices of the validation set and the test set", default = "0,1")
     parser.add_argument("--augment_params", type = str, help="1: whether to do augmentation, 2: whether to normalize, 3: whether to use artificial data (old): ", 
@@ -66,11 +66,11 @@ if __name__ == '__main__':
     
     # Parse paths
     root = os.getcwd()
-    mask_types = ["S", "M3D", "M2DE", "M3DE"]
+    mask_types = ["S", "M3D", "M2DE", "M3DE", "M3DEW"]
     mask_type = mask_types[args.mask_type]
     data_dir = os.path.join(root,"data/trainingData/"+mask_type)
     model_dir = os.path.join(root, "models", "U_" + mask_type)
-    split_file = os.path.join(root, "segmenterCode/cell_split.npy")
+    split_file = os.path.join(root, "SegmenterCode/cell_split.npy")
 
     # Parse unet parameters
     params = args.unet_params.split(",")
@@ -90,10 +90,11 @@ if __name__ == '__main__':
         num_conv = unet_params[2], three_dim = True)}
 
     loss_functions = {"Dice": Dice(att_weight = args.att_weight, squared = False), "Dice_squared": Dice(att_weight = args.att_weight, squared = True), "tversky_loss": Tversky(att_weight = args.att_weight), "tversky_loss_orig": tversky_loss, 
-    "tversky_loss_squared": Tversky(att_weight = args.att_weight, squared = True), "bin_cross": bin_crossentropy, "comb_loss": crossent_dice_comb}
+    "tversky_loss_squared": Tversky(att_weight = args.att_weight, squared = True), "bin_cross": bin_crossentropy, "bin_cross_unetw": bin_crossentropy_unetw, "comb_loss": crossent_dice_comb}
 
     # Model name
-    model_name = "_".join([args.model_header, mask_type, str(int(args.val_test_split[-1])+1)])
+    test_ind = args.val_test_split.split(",")[-1]
+    model_name = "_".join([args.model_header, mask_type, str(int(test_ind)+1)])
     args.model_header = model_name
 
     # Callbacks
