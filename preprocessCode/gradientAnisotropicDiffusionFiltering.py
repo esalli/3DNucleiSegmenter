@@ -17,8 +17,6 @@ domainSigma=1
 rangeSigma=50
 numberOfRangeGaussianSamples=50
 
-#timeStep=0.015
-#timeStep=0.0625
 for timeStep in [0.015,0.0625]:
   for conductanceParameter in [1,4]:
     for numberOfIterations in [5,10,20]:
