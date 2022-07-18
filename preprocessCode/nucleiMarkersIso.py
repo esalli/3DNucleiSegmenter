@@ -7,7 +7,6 @@ sys.path.append("..")
 import numpy as np
 import SimpleITK as sitk
 import configSegmenter as c
-#c.SPHEROIDS=["12"]
 
 for sph in c.SPHEROIDS:
     print("*********************************************************")
@@ -15,7 +14,6 @@ for sph in c.SPHEROIDS:
     print("*********************************************************")
     
 
-    #####GT=sitk.ReadImage(c.PREPROCESSED_GT_DATADIR+sph+'_GT_expanded_nearest_3.nrrd') 
     GT=sitk.ReadImage(c.PREPROCESSED_GT_DATADIR+sph+'_GT_expanded_3_DT.nrrd')
 
     emptyImage=GT*0
@@ -45,7 +43,6 @@ for sph in c.SPHEROIDS:
                print("Warning: More than one component")
                print("********************************")
                moreThanOneComponentFound=1
-#               raise Exception('More than one component !?')
             erodedLabel=sitk.BinaryErode(label>0,[3,3,3])
             seeds=components.Execute(erodedLabel)
             print(" Connected components after [3,3,3] erosion: ",components.GetObjectCount())
