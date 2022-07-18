@@ -17,7 +17,7 @@ for sph in c.SPHEROIDS:
     GT=sitk.ReadImage(c.PREPROCESSED_GT_DATADIR+sph+'_GT_expanded_3_DT.nrrd')
 
     emptyImage=GT*0
-    markerImage2=emptyImage*0 #Image for seed, *0 ensures deepcopy
+    markerImage2=emptyImage*0 #Image for seed
 
     
     # find maximum label number
