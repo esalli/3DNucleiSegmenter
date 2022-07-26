@@ -33,7 +33,7 @@ git clone https://github.com/esalli/3DNucleiSegmenter
 ```
 
 ## Acquire models
-Download the prebuilt deep learning models from https://figshare.com/s/bc4ef58c8a620dd97f4f
+Download the prebuilt deep learning models from  https://doi.org/10.6084/m9.figshare.1643915
 
 Extract the zip into the root of 3DNucleiSegmenter
 ```
@@ -45,7 +45,8 @@ Extract the zip into the root of 3DNucleiSegmenter
 
 ### Download the data of 12 spheroids
 
-The data are available from https://figshare.com/s/44cb448afa0ea6cff6e8
+The data are available 
+https://doi.org/10.6084/m9.figshare.16438314 
 
 Extract the spheroids.zip into data/preprocessedData: 
 ```
@@ -53,7 +54,8 @@ Extract the spheroids.zip into data/preprocessedData:
 ```
 ### Download the Independet datasets (optional):
 
-Liver spheroid from https://figshare.com/s/10ef32f9fd189111bbcd
+Liver spheroid from
+https://doi.org/10.6084/m9.figshare.16438185
 
 Extarct the LiverSpheroid.zip  into data/independentData: 
 ```
@@ -184,6 +186,7 @@ The results will be saved into  the directory 3DNucleiSegmenter/data/segmentedDa
 
 ## Citing
 
-If you use 3DNucleiSegmenter in your research, please cite the following paper:
-Kaseva et al: Marker-controlled Watershed with Deep Edge Emphasis and Optimized H-minima Transform for Automatic Segmentation of Densely Cultivated 3D Cell Nuclei. Submitted to BMC Bioinformatics.
+If you use 3DNucleiSegmenter or datasets (12 spheroids and their segmentations) in your research, please cite the following paper:
+Kaseva, T., Omidali, B., Hippeläinen, E., Mäkelä T., Wilppu U., Sofiev, A.,  Merivaara, A., Yliperttula M., Savolainen, S. & Salli, E.  Marker-controlled watershed with deep edge emphasis and optimized H-minima transform for automatic segmentation of densely cultivated 3D cell nuclei. BMC Bioinformatics 23, 289 (2022). https://doi.org/10.1186/s12859-022-04827-3
+ 
 
